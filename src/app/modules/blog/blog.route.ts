@@ -11,4 +11,10 @@ router.post(
   BlogControllers.createBlog,
 );
 
-export const BlogRouters = router; 
+router.get('/', BlogControllers.getAllBlogs);
+
+router.get('/:id', BlogControllers.getBlogById);
+
+router.delete('/:id', BlogControllers.deleteBlogById);
+
+export const BlogRouters = router;

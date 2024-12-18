@@ -14,7 +14,44 @@ const createBlog = catchAsync(async (req, res) => {
   });
 });
 
+const getAllBlogs = catchAsync(async (req, res) => {
+  const result = await BlogServices.getAllBlogsFromDB();
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Blogs are retrieved successfully',
+    data: result,
+  });
+});
+
+const getBlogById = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await BlogServices.getBlogByIdFromDB(id);
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Blog is retrieved successfully',
+    data: result,
+  });
+});
+
+const deleteBlogById = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await BlogServices.deleteBlogByIdFromDB(id);
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Blog is deleted successfully',
+    data: result,
+  });
+});
 
 export const BlogControllers = {
-    createBlog,
-}
+  createBlog,
+  getAllBlogs,
+  getBlogById,
+  deleteBlogById
+};
