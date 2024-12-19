@@ -15,6 +15,12 @@ router.get('/', BlogControllers.getAllBlogs);
 
 router.get('/:id', BlogControllers.getBlogById);
 
+router.patch(
+  '/:id',
+  validateRequest(BlogValidations.updateBlogValidaitonSchema),
+  BlogControllers.updateBlogById,
+);
+
 router.delete('/:id', BlogControllers.deleteBlogById);
 
 export const BlogRouters = router;

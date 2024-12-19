@@ -52,6 +52,15 @@ const getBlogByIdFromDB = async (id: string) => {
   return result;
 };
 
+const updateBlogByIdIntoDB = async (id: string, payload: Partial<IBlog>) => {
+  const result = await Blog.findByIdAndUpdate(id, payload, {
+    new: true,
+    runValidators: true,
+  });
+
+  return result;
+};
+
 const deleteBlogByIdFromDB = async (id: string) => {
   const result = await Blog.findByIdAndDelete(id);
 
@@ -63,4 +72,5 @@ export const BlogServices = {
   getAllBlogsFromDB,
   getBlogByIdFromDB,
   deleteBlogByIdFromDB,
+  updateBlogByIdIntoDB,
 };
