@@ -12,7 +12,7 @@ router.post(
   BlogControllers.createBlog,
 );
 
-router.get('/', auth(), BlogControllers.getAllBlogs);
+router.get('/', BlogControllers.getAllBlogs);
 
 router.get('/:id', BlogControllers.getBlogById);
 
