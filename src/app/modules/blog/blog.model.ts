@@ -1,7 +1,7 @@
 import { model, Schema } from 'mongoose';
-import { IBlog } from './blog.interface';
+import { BlogModel, IBlog } from './blog.interface';
 
-const blogSchema = new Schema<IBlog>(
+const blogSchema = new Schema<IBlog, BlogModel>(
   {
     title: {
       type: String,
@@ -27,4 +27,9 @@ const blogSchema = new Schema<IBlog>(
   },
 );
 
-export const Blog = model<IBlog>('Blog', blogSchema);
+// check the user with the id
+blogSchema.statics.isBlogExistById = async function (id: string) {
+  return await Blog.findById(id);
+};
+
+export const Blog = model<IBlog, BlogModel>('Blog', blogSchema);
