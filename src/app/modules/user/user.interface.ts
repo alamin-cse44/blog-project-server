@@ -15,6 +15,7 @@ export type TLoginUser = {
 };
 
 export interface UserModel extends Model<IUser> {
+  isUserExistById(id: string): Promise<IUser>;
   findUserByEmail(email: string): Promise<IUser>;
   isPasswordMatched(
     plainTextPassword: string,

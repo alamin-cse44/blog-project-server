@@ -45,18 +45,20 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
-
-
 // set '' after saving password
 userSchema.post('save', function (doc, next) {
   doc.password = '';
   next();
 });
 
-
 // check the user with the email address
 userSchema.statics.findUserByEmail = async function (email: string) {
   return await User.findOne({ email }).select('+password');
+};
+
+// check the user with the id
+userSchema.statics.isUserExistById = async function (id: string) {
+  return await User.findById(id);
 };
 
 // check the user with the password
