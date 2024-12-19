@@ -2,6 +2,8 @@ import { StatusCodes } from 'http-status-codes';
 import AppError from '../../errors/AppError';
 import { IUser, TLoginUser } from './user.interface';
 import { User } from './user.model';
+import jwt from 'jsonwebtoken';
+import config from '../../config';
 
 const registerUserIntoDB = async (payload: IUser) => {
   const result = await User.create(payload);
@@ -33,8 +35,22 @@ const loginUserIntoDB = async (payload: TLoginUser) => {
     throw new AppError(StatusCodes.FORBIDDEN, 'The password is incorrect!!!');
   }
 
-  // create token to send to the client 
-  
+  // create token to send to the client
+
+  const jwtPayload = {
+    userEmail: user?.email,
+    userRole: user?.role,
+  };
+
+  const accessToekn = jwt.sign(
+    {
+      jwtPayload,
+    },
+    config.jwt_access_token as string,
+    { expiresIn: '10d' },
+  );
+
+  return {accessToekn};
 };
 
 export const UserServices = {

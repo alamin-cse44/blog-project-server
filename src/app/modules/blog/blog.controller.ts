@@ -15,6 +15,7 @@ const createBlog = catchAsync(async (req, res) => {
 });
 
 const getAllBlogs = catchAsync(async (req, res) => {
+  console.log("req.user from controller", req.user)
   const result = await BlogServices.getAllBlogsFromDB(req.query);
 
   sendResponse(res, {
