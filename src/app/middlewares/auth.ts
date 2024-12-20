@@ -8,7 +8,14 @@ import { TUserRole } from '../modules/user/user.interface';
 
 const auth = (...requiredRoles: TUserRole[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-    const token = req.headers.authorization;
+    const tokenWithBearer = req.headers.authorization?.split(' ')[0];
+    let token;
+    if (tokenWithBearer === 'Bearer') {
+      token = req.headers.authorization?.split(' ')[1];
+    } else {
+      token = req.headers.authorization;
+    }
+    // console.log('token :', token);
     // check the token is exist
     if (!token) {
       throw new AppError(StatusCodes.BAD_REQUEST, 'You are not Authorized!!!');
@@ -38,9 +45,9 @@ const auth = (...requiredRoles: TUserRole[]) => {
           );
         }
 
-        // decoded undefined 
+        // decoded undefined
         req.user = decoded as JwtPayload;
-        
+
         next();
       },
     );
