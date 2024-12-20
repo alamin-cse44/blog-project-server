@@ -38,7 +38,7 @@ class QeryBuilder<T> {
     ];
     excludeFields.forEach((field) => delete queryObj[field]);
 
-    console.log('filtering: ', queryObj);
+    // console.log('filtering: ', queryObj);
 
     this.modelQuery = this.modelQuery.find(queryObj as FilterQuery<T>);
 
@@ -77,7 +77,7 @@ class QeryBuilder<T> {
   fields() {
     const fields =
       (this?.query?.fields as string)?.split(',')?.join(' ') || '-__v';
-    console.log('fields: ', fields);
+    // console.log('fields: ', fields);
     this.modelQuery = this.modelQuery.select(fields);
     return this;
   }

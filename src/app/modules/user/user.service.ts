@@ -14,7 +14,6 @@ const registerUserIntoDB = async (payload: IUser) => {
 const loginUserIntoDB = async (payload: TLoginUser) => {
   // check if user is exist with the email address
   const user = await User.findUserByEmail(payload?.email);
-  console.log('user: ', user);
 
   if (!user) {
     throw new AppError(StatusCodes.FORBIDDEN, 'The User is not found!!!');

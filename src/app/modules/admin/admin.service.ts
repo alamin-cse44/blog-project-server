@@ -24,7 +24,7 @@ const blockUserByIdByAdminFromDB = async (
 
 const deleteBlogByIdByAdminFromDB = async (id: string) => {
   const blog = await Blog.isBlogExistById(id);
-  console.log("blog: ", blog);
+  
 
   if (!blog) {
     throw new AppError(StatusCodes.NOT_FOUND, 'Blog not found');

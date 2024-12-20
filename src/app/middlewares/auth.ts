@@ -27,9 +27,9 @@ const auth = (...requiredRoles: TUserRole[]) => {
         }
 
         const role = (decoded as JwtPayload)?.jwtPayload?.userRole;
-        console.log(decoded);
-        console.log('role: ',role);
-        console.log('requiredRole: ' + requiredRoles);
+        // console.log(decoded);
+        // console.log('role: ',role);
+        // console.log('requiredRole: ' + requiredRoles);
 
         if (requiredRoles && !requiredRoles.includes(role)) {
           throw new AppError(

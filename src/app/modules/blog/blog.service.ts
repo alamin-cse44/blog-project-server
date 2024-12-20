@@ -35,7 +35,6 @@ const getAllBlogsFromDB = async (query: Record<string, unknown>) => {
   // exludeFields.forEach((field) => delete queryObj[field]);
   // const filterQuery = await searchQuery.find(queryObj).populate('author');
 
-  console.log('query: ', query);
 
   const blogQuery = new QeryBuilder(Blog.find().populate('author'), query)
     .search(blogSearchableFields)
