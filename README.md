@@ -98,3 +98,14 @@ Here, use the command **npm run start:dev**  and others necessary command when i
 
 
 ### For the deployement I have created the vercel.json file. In this file, I have added the public credentials. I have deployed my server in vercel with vercel cli
+
+### Types of Errors Handled
+
+The following common errors will be managed with appropriate responses:
+
+Zod Validation Error (ZOD_ERROR): Errors arising from invalid data inputs based on Zod schema validation.
+Not Found Error (NOT_FOUND_ERROR): When requested resources (e.g., a user, item, or page) are not found.
+Validation Error (VALIDATION_ERROR): General validation errors (e.g., incorrect data format, missing required fields).
+Authentication Error (AUTH_ERROR): Issues related to failed authentication (e.g., invalid token or expired session).
+Authorization Error (AUTHORIZATION_ERROR): When the user lacks the necessary permissions to access a resource.
+Internal Server Error (INTERNAL_SERVER_ERROR): Unhandled errors or unexpected server issues.
