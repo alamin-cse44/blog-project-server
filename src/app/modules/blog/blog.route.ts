@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.post(
   '/',
-  auth(USER_ROLE.user, USER_ROLE.admin),
+  auth(USER_ROLE.user),
   validateRequest(BlogValidations.createBlogValidaitonSchema),
   BlogControllers.createBlog,
 );
@@ -20,14 +20,14 @@ router.get('/:id', BlogControllers.getBlogById);
 
 router.patch(
   '/:id',
-  auth(USER_ROLE.user, USER_ROLE.admin),
+  auth(USER_ROLE.user),
   validateRequest(BlogValidations.updateBlogValidaitonSchema),
   BlogControllers.updateBlogById,
 );
 
 router.delete(
   '/:id',
-  auth(USER_ROLE.user, USER_ROLE.admin),
+  auth(USER_ROLE.user),
   BlogControllers.deleteBlogById,
 );
 
