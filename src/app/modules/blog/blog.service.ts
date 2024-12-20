@@ -1,7 +1,11 @@
+import { StatusCodes } from 'http-status-codes';
 import QeryBuilder from '../../builder/QeryBuilder';
+import AppError from '../../errors/AppError';
 import { blogSearchableFields } from './blog.constant';
 import { IBlog } from './blog.interface';
 import { Blog } from './blog.model';
+import { JwtPayload } from 'jsonwebtoken';
+import { IUser } from '../user/user.interface';
 
 const createBlogIntoDB = async (payload: IBlog) => {
   const result = await Blog.create(payload);
@@ -52,7 +56,37 @@ const getBlogByIdFromDB = async (id: string) => {
   return result;
 };
 
-const updateBlogByIdIntoDB = async (id: string, payload: Partial<IBlog>) => {
+const updateBlogByIdIntoDB = async (
+  id: string,
+  payload: Partial<IBlog>,
+  user: JwtPayload,
+) => {
+  // check if blog exists by id
+  const blog = await Blog.isBlogExistById(id);
+  console.log('blog: ', blog);
+
+  if (!blog) {
+    throw new AppError(StatusCodes.NOT_FOUND, 'Blog not found');
+  }
+
+  // check current user === blog author
+
+  const currentUserEmail = user?.jwtPayload?.userEmail;
+  const blogAuthor = await Blog.findById(id).populate<{ author: IUser }>({
+    path: 'author',
+    select: 'email',
+  });
+  const blogAuthorEmail = blogAuthor?.author?.email;
+
+  if (currentUserEmail !== blogAuthorEmail) {
+    throw new AppError(
+      StatusCodes.FORBIDDEN,
+      'You are not authorized to update this blog',
+    );
+  }
+
+  // update the blog
+
   const result = await Blog.findByIdAndUpdate(id, payload, {
     new: true,
     runValidators: true,

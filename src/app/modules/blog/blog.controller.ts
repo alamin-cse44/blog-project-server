@@ -39,8 +39,9 @@ const getBlogById = catchAsync(async (req, res) => {
 });
 
 const updateBlogById = catchAsync(async (req, res) => {
+  const user = req.user;
   const { id } = req.params;
-  const result = await BlogServices.updateBlogByIdIntoDB(id, req.body);
+  const result = await BlogServices.updateBlogByIdIntoDB(id, req.body, user);
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
