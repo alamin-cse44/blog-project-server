@@ -24,8 +24,6 @@ In this project I have used node package manager(npm) to install all kinds of re
 - EXPRESS.JS
 - MONGOOSE
 - MONGODB ATLAS / COMPASS
-- jwt
-- bcrypt
 
 For the better code writing and avoiding unnecessary error I have installed —
 
@@ -44,6 +42,10 @@ For the better code writing and avoiding unnecessary error I have installed —
 - **npm install typescript --save-dev**
 - npm i cors
 - npm i dotenv
+- npm i bcrypt
+- npm i -D @types/bcrypt
+- npm i jsonwebtoken
+- npm i -D @types/jsonwebtoken
 
 # For typescript init a ts json file
 
