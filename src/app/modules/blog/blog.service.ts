@@ -63,7 +63,6 @@ const updateBlogByIdIntoDB = async (
 ) => {
   // check if blog exists by id
   const blog = await Blog.isBlogExistById(id);
-  console.log('blog: ', blog);
 
   if (!blog) {
     throw new AppError(StatusCodes.NOT_FOUND, 'Blog not found');
@@ -95,7 +94,31 @@ const updateBlogByIdIntoDB = async (
   return result;
 };
 
-const deleteBlogByIdFromDB = async (id: string) => {
+const deleteBlogByIdFromDB = async (id: string, user: JwtPayload) => {
+  // check if blog exists by id
+  const blog = await Blog.isBlogExistById(id);
+
+  if (!blog) {
+    throw new AppError(StatusCodes.NOT_FOUND, 'Blog not found');
+  }
+
+  // check current user === blog author
+
+  const currentUserEmail = user?.jwtPayload?.userEmail;
+  const blogAuthor = await Blog.findById(id).populate<{ author: IUser }>({
+    path: 'author',
+    select: 'email',
+  });
+  const blogAuthorEmail = blogAuthor?.author?.email;
+
+  if (currentUserEmail !== blogAuthorEmail) {
+    throw new AppError(
+      StatusCodes.FORBIDDEN,
+      'You are not authorized to Delete this blog',
+    );
+  }
+
+  // delete the blog
   const result = await Blog.findByIdAndDelete(id);
 
   return result;
