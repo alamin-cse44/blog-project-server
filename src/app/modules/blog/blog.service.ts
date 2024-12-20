@@ -6,9 +6,23 @@ import { IBlog } from './blog.interface';
 import { Blog } from './blog.model';
 import { JwtPayload } from 'jsonwebtoken';
 import { IUser } from '../user/user.interface';
+import { User } from '../user/user.model';
 
-const createBlogIntoDB = async (payload: IBlog) => {
-  const result = await Blog.create(payload);
+const createBlogIntoDB = async (payload: IBlog, user: JwtPayload) => {
+
+  const email = user?.jwtPayload?.userEmail;
+  const userData = await User.findOne({email});
+  // console.log(userData?._id.toString())
+ 
+  const blog = {
+    title: payload?.title,
+    content: payload?.content,
+    author: userData?._id.toString()
+  }
+
+  // console.log(blog)
+
+  const result = await Blog.create(blog);
 
   return result;
 };
